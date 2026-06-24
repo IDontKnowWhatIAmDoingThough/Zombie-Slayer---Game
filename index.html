@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Zombie Slayer</title>
     <!-- Load Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,12 +20,25 @@
             rel="stylesheet">
     </noscript>
     <style>
-        body {
+        html, body {
             margin: 0;
+            padding: 0;
             overflow: hidden;
             background-color: #000;
             font-family: 'Rajdhani', 'Comic Sans MS', sans-serif;
             user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overscroll-behavior: none;
+        }
+
+        canvas {
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         #ui-layer {
@@ -2328,6 +2341,65 @@
             text-shadow: 0 0 2px #000;
             transition: color 0.5s, border-color 0.5s;
         }
+        
+        /* --- MOBILE TOUCH CONTROLS --- */
+        .touch-joystick {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 100000;
+            display: none;
+        }
+        .touch-joystick-puck {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(0, 255, 255, 0.6);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .touch-look-feedback {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px dashed rgba(255, 170, 0, 0.5);
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.2);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 100000;
+            display: none;
+        }
+        .mobile-action-btn {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            pointer-events: auto;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: transform 0.1s ease, background-color 0.1s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            box-sizing: border-box;
+        }
+        .mobile-action-btn:active {
+            transform: scale(0.9);
+        }
     </style>
     <!-- Load Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -4293,6 +4365,52 @@
 
 <body>
 
+    <!-- Left Move Joystick -->
+    <div id="move-joystick" class="touch-joystick">
+        <div class="touch-joystick-puck"></div>
+    </div>
+    
+    <!-- Right Look Feedback -->
+    <div id="look-joystick" class="touch-look-feedback"></div>
+
+    <!-- Mobile HUD Controls (Only visible during gameplay on touch devices) -->
+    <div id="mobile-hud" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90000;">
+        <!-- Pause Button (Top Left) -->
+        <div id="mobile-pause-btn" class="mobile-action-btn" style="top: 20px; left: 20px; width: 50px; height: 50px; background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 90005;">
+            <span style="font-size: 20px; font-weight: bold;">⏸</span>
+        </div>
+
+        <!-- Jump Button -->
+        <div id="mobile-jump-btn" class="mobile-action-btn" style="bottom: 120px; right: 20px; width: 75px; height: 75px; background: rgba(0, 255, 255, 0.15); border: 2px solid rgba(0, 255, 255, 0.5); box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);">
+            <span style="font-size: 26px;">⇧</span>
+            <span style="font-size: 10px; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; font-weight: bold; margin-top: -4px;">Jump</span>
+        </div>
+        
+        <!-- Fire Button -->
+        <div id="mobile-fire-btn" class="mobile-action-btn" style="bottom: 25px; right: 115px; width: 90px; height: 90px; background: rgba(255, 68, 68, 0.2); border: 2px solid rgba(255, 68, 68, 0.6); box-shadow: 0 0 15px rgba(255, 68, 68, 0.4); z-index: 90005;">
+            <span style="font-size: 36px;">🔥</span>
+            <span style="font-size: 10px; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; font-weight: bold; margin-top: -4px;">Fire</span>
+        </div>
+
+        <!-- Reload Button -->
+        <div id="mobile-reload-btn" class="mobile-action-btn" style="bottom: 25px; right: 20px; width: 70px; height: 70px; background: rgba(255, 170, 0, 0.15); border: 2px solid rgba(255, 170, 0, 0.5); box-shadow: 0 0 10px rgba(255, 170, 0, 0.3);">
+            <span style="font-size: 24px;">↻</span>
+            <span style="font-size: 10px; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; font-weight: bold; margin-top: -4px;">Reload</span>
+        </div>
+
+        <!-- Weapon Swap Button -->
+        <div id="mobile-swap-btn" class="mobile-action-btn" style="bottom: 215px; right: 20px; width: 65px; height: 65px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);">
+            <span style="font-size: 24px;">⇆</span>
+            <span style="font-size: 9px; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; font-weight: bold; margin-top: -4px;">Weapon</span>
+        </div>
+
+        <!-- ADS Zoom Button -->
+        <div id="mobile-ads-btn" class="mobile-action-btn" style="bottom: 125px; right: 115px; width: 65px; height: 65px; background: rgba(153, 51, 255, 0.15); border: 2px solid rgba(153, 51, 255, 0.5); box-shadow: 0 0 10px rgba(153, 51, 255, 0.3);">
+            <span style="font-size: 24px;">🔍</span>
+            <span style="font-size: 9px; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; font-weight: bold; margin-top: -4px;">ADS</span>
+        </div>
+    </div>
+
     <!-- HUD / UI -->
     <div id="virtual-cursor"></div>
     <div id="startup-bg-fade" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1; pointer-events: none; transition: opacity 4s ease-in-out;"></div>
@@ -4453,12 +4571,13 @@
     <div id="mobile-warning-overlay" class="fullscreen-overlay" style="display: none; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 95000;" onclick="event.stopPropagation()" onmousedown="event.stopPropagation()">
         <div style="background: rgba(10, 10, 10, 0.95); border: 3px solid #ffaa00; padding: 40px; width: 90%; max-width: 500px; box-shadow: 0 0 35px rgba(255, 170, 0, 0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: auto; text-align: center;">
             <div style="font-size: 56px; line-height: 1; margin-bottom: 20px; filter: drop-shadow(0 0 8px #ffaa00);">&#9888;&#65039;</div>
-            <div style="font-family: 'Freckle Face', 'Comic Sans MS', sans-serif !important; font-size: 32px; color: #ffaa00; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255, 170, 0, 0.5); letter-spacing: 2px;">WARNING - Controls</div>
+            <div style="font-family: 'Freckle Face', 'Comic Sans MS', sans-serif !important; font-size: 32px; color: #ffaa00; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255, 170, 0, 0.5); letter-spacing: 2px;">MOBILE CONTROLS ACTIVE</div>
             <div style="font-family: 'Rajdhani', 'Comic Sans MS', sans-serif; font-weight: bold; font-size: 18px; color: #ffffff; margin-bottom: 30px; line-height: 1.6; letter-spacing: 1px;">
-                This game is designed for <strong>keyboard & mouse</strong> or an <strong>Xbox controller</strong>.<br><br>
-                Touch controls are currently in development and are not yet supported.
+                This game now supports touch controls for mobile! <br><br>
+                Use your <strong>left thumb</strong> to move, and <strong>right thumb</strong> to look & aim.<br>
+                Tap on-screen buttons to <strong>Jump</strong> and <strong>Aim Down Sights (ADS)</strong>.
             </div>
-            <button id="mobile-warning-continue" class="btn" style="margin-top: 0; width: 240px; height: 60px; padding: 0; display: flex; align-items: center; justify-content: center;" onclick="dismissMobileWarning()">CONTINUE ANYWAY</button>
+            <button id="mobile-warning-continue" class="btn" style="margin-top: 0; width: 240px; height: 60px; padding: 0; display: flex; align-items: center; justify-content: center;" onclick="dismissMobileWarning()">PLAY WITH TOUCH</button>
         </div>
     </div>
 
@@ -5349,6 +5468,11 @@
         }
 
         const state = {
+            isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+                || (navigator.maxTouchPoints > 0)
+                || ('ontouchstart' in window),
+            touchMoveX: 0,
+            touchMoveY: 0,
             isPlaying: false,
             devBulletTimeActive: false,
             isFiring: false,
@@ -13172,7 +13296,12 @@ function animateShopParticles() {
 
                 // Pause Game
                 state.isPlaying = false;
-                document.exitPointerLock();
+                if (!state.isMobile) {
+                    document.exitPointerLock();
+                } else {
+                    const mobHud = document.getElementById('mobile-hud');
+                    if (mobHud) mobHud.style.display = 'none';
+                }
 
                 // Show UI
                 const overlay = document.getElementById('shop-overlay');
@@ -13212,10 +13341,15 @@ function animateShopParticles() {
 
                 // Resume Game & Next Stage
                 state.isPlaying = true;
-                try {
-                    const p = document.body.requestPointerLock();
-                    if (p) p.catch(e => {});
-                } catch (e) {}
+                if (!state.isMobile) {
+                    try {
+                        const p = document.body.requestPointerLock();
+                        if (p) p.catch(e => {});
+                    } catch (e) {}
+                } else {
+                    const mobHud = document.getElementById('mobile-hud');
+                    if (mobHud) mobHud.style.display = 'block';
+                }
                 
                 // Track current currency as starting currency for NEXT shop visit
                 state.shopStartCurrency = state.currency;
@@ -28831,6 +28965,7 @@ function animateShopParticles() {
         }
 
         const onKeyDown = (event) => {
+            if (state.isMobile) return;
             const gameplayKeys = ['ArrowUp', 'KeyW', 'ArrowLeft', 'KeyA', 'ArrowDown', 'KeyS', 'KeyD', 'Space', 'KeyR'];
             if (gameplayKeys.includes(event.code) && (!state.isPlaying || state.isDying)) {
                 return;
@@ -28997,6 +29132,7 @@ function animateShopParticles() {
         };
 
         const onKeyUp = (event) => {
+            if (state.isMobile) return;
             const gameplayKeys = ['ArrowUp', 'KeyW', 'ArrowLeft', 'KeyA', 'ArrowDown', 'KeyS', 'KeyD', 'Space'];
             if (gameplayKeys.includes(event.code) && (!state.isPlaying || state.isDying)) {
                 return;
@@ -29017,6 +29153,7 @@ function animateShopParticles() {
         };
 
         const onMouseDown = (event) => {
+            if (state.isMobile) return;
             // FIX: Ignore clicks on UI elements and don't re-lock if dying
             if (state.isDying) return;
             if (event.target.closest('button, input, label, select, textarea, .accordion-menu, #overlay, #shop-overlay, #game-over-overlay, #grass-confirm-overlay')) return;
@@ -29053,6 +29190,7 @@ function animateShopParticles() {
         };
 
         const onMouseUp = (event) => {
+            if (state.isMobile) return;
             if (event.button === 0) { // Left Click Release
                 state.isFiring = false; // AUTOMATIC FIRE OFF
             } else if (event.button === 2) { // Right Click Release
@@ -29071,7 +29209,7 @@ function animateShopParticles() {
         // --- WEAPON SCROLL WHEEL ---
         const weaponList = ['rifle', 'rocket', 'nuke', 'antidote', 'minigun', 'cannon'];
         document.addEventListener('wheel', (event) => {
-            if (!state.isPlaying || document.pointerLockElement !== document.body) return;
+            if (!state.isPlaying || (!state.isMobile && document.pointerLockElement !== document.body)) return;
 
             // Find current weapon index
             let currentIndex = weaponList.indexOf(state.currentWeapon);
@@ -29112,6 +29250,374 @@ function animateShopParticles() {
                 if (typeof AudioSys !== 'undefined' && AudioSys.playWeaponSwap) AudioSys.playWeaponSwap();
             }
         });
+
+        // --- MOBILE TOUCH CONTROLS HELPER FUNCTIONS & LISTENERS ---
+        
+        // Helper to swap weapons on mobile tapping
+        function swapWeapon() {
+            if (!state.isPlaying) return;
+            const weaponList = ['rifle', 'rocket', 'nuke', 'antidote', 'minigun', 'cannon'];
+            let currentIndex = weaponList.indexOf(state.currentWeapon);
+            if (currentIndex === -1) currentIndex = 0;
+
+            const hasWeapon = (weapon) => {
+                if (weapon === 'rifle') return true;
+                if (weapon === 'rocket' && state.rocketAmmo > 0) return true;
+                if (weapon === 'nuke' && state.nukeAmmo > 0) return true;
+                if (weapon === 'antidote' && state.antidoteAmmo > 0) return true;
+                if (weapon === 'minigun' && state.minigunAmmo > 0) return true;
+                if (weapon === 'cannon' && state.cannonAmmo > 0) return true;
+                return false;
+            };
+
+            let nextIndex = currentIndex;
+            let found = false;
+            for (let i = 0; i < weaponList.length; i++) {
+                nextIndex = (nextIndex + 1) % weaponList.length;
+                if (hasWeapon(weaponList[nextIndex])) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found && currentIndex !== nextIndex) {
+                state.currentWeapon = weaponList[nextIndex];
+                if (typeof updateWeaponModel === 'function') updateWeaponModel();
+                if (typeof updateMuzzlePosition === 'function') updateMuzzlePosition();
+                if (typeof updateHUD === 'function') updateHUD();
+                if (typeof AudioSys !== 'undefined' && AudioSys.playWeaponSwap) AudioSys.playWeaponSwap();
+            }
+        }
+
+        // Helper to pause/unpause on mobile pause button tap
+        window.togglePauseMobile = function() {
+            const overlay = document.getElementById('overlay');
+            const stageInfo = document.getElementById('stage-info');
+
+            if (!state.isPlaying) {
+                // Resume game
+                state.isPlaying = true;
+                if (overlay) {
+                    overlay.style.display = 'none';
+                    overlay.style.opacity = '0';
+                    overlay.style.pointerEvents = 'none';
+                }
+                const mobHud = document.getElementById('mobile-hud');
+                if (mobHud) mobHud.style.display = 'block';
+                if (stageInfo) stageInfo.style.display = 'block';
+                state.lastTime = performance.now();
+            } else {
+                // Pause game
+                state.isPlaying = false;
+                state.isFiring = false;
+                state.touchMoveX = 0;
+                state.touchMoveY = 0;
+                
+                if (overlay) {
+                    overlay.style.display = 'flex';
+                    overlay.style.opacity = '1';
+                    overlay.style.pointerEvents = 'auto';
+                    overlay.style.transition = 'none';
+                    overlay.style.backdropFilter = '';
+                    overlay.style.webkitBackdropFilter = '';
+                    Array.from(overlay.children).forEach(c => {
+                        c.style.transition = 'none';
+                        c.style.opacity = '1';
+                    });
+                    
+                    const title = overlay.querySelector('h1');
+                    if (title) title.innerText = "GAME PAUSED";
+                    const author = overlay.querySelector('h2');
+                    if (author) author.style.display = 'none';
+                    const btn = document.getElementById('start-btn');
+                    if (btn) btn.innerText = "RESUME";
+                    const mpBtn = document.getElementById('multiplayer-btn-container');
+                    if (mpBtn) mpBtn.style.display = 'none';
+                    const pauseLeftPanel = document.getElementById('pause-left-panel');
+                    if (pauseLeftPanel) pauseLeftPanel.style.display = 'flex';
+                }
+                if (stageInfo) stageInfo.style.display = 'none';
+            }
+        };
+
+        // Mobile touch detection and mapping
+        if (state.isMobile) {
+            let moveTouchId = null;
+            let moveStartPos = { x: 0, y: 0 };
+            
+            let lookTouchId = null;
+            let lookLastPos = { x: 0, y: 0 };
+
+            const moveJoystick = document.getElementById('move-joystick');
+            const movePuck = moveJoystick ? moveJoystick.querySelector('.touch-joystick-puck') : null;
+            const lookJoystick = document.getElementById('look-joystick');
+
+            // 1. Prevent mobile browser default drag, scroll, and pinch gestures
+            document.addEventListener('touchstart', (e) => {
+                if (state.isPlaying && !e.target.closest('button, input, label, select, textarea, .accordion-menu, #pause-left-panel, #shop-continue-btn, #coffee-btn')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            document.addEventListener('touchmove', (e) => {
+                if (state.isPlaying) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            document.addEventListener('touchend', (e) => {
+                if (state.isPlaying && !e.target.closest('button, input, label, select, textarea, .accordion-menu, #pause-left-panel, #shop-continue-btn, #coffee-btn')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            // 2. Main Window Touch Handlers for Joysticks
+            window.addEventListener('touchstart', (e) => {
+                if (!state.isPlaying) return;
+                
+                // Ignore gestures targeting interactive HUD controls
+                if (e.target.closest('.mobile-action-btn, #mobile-hud, button, input, label, select, textarea, .accordion-menu, #overlay, #shop-overlay, #game-over-overlay, #grass-confirm-overlay')) {
+                    return;
+                }
+
+                const width = window.innerWidth;
+                for (let i = 0; i < e.changedTouches.length; i++) {
+                    const touch = e.changedTouches[i];
+                    
+                    // Left half: movement joystick
+                    if (touch.clientX < width / 2) {
+                        if (moveTouchId === null) {
+                            moveTouchId = touch.identifier;
+                            moveStartPos = { x: touch.clientX, y: touch.clientY };
+                            
+                            if (moveJoystick) {
+                                moveJoystick.style.left = touch.clientX + 'px';
+                                moveJoystick.style.top = touch.clientY + 'px';
+                                moveJoystick.style.display = 'block';
+                                if (movePuck) {
+                                    movePuck.style.transform = 'translate(-50%, -50%)';
+                                }
+                            }
+                        }
+                    } 
+                    // Right half: camera look/aim
+                    else {
+                        if (lookTouchId === null) {
+                            lookTouchId = touch.identifier;
+                            lookLastPos = { x: touch.clientX, y: touch.clientY };
+                            
+                            if (lookJoystick) {
+                                lookJoystick.style.left = touch.clientX + 'px';
+                                lookJoystick.style.top = touch.clientY + 'px';
+                                lookJoystick.style.display = 'block';
+                            }
+                        }
+                    }
+                }
+            }, { passive: false });
+
+            window.addEventListener('touchmove', (e) => {
+                if (!state.isPlaying) return;
+
+                const touchSensitivity = 0.005; // Touch camera look sensitivity
+
+                for (let i = 0; i < e.changedTouches.length; i++) {
+                    const touch = e.changedTouches[i];
+
+                    if (touch.identifier === moveTouchId) {
+                        let dx = touch.clientX - moveStartPos.x;
+                        let dy = touch.clientY - moveStartPos.y;
+                        
+                        const maxRadius = 40;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist > maxRadius) {
+                            dx = (dx / dist) * maxRadius;
+                            dy = (dy / dist) * maxRadius;
+                        }
+
+                        if (movePuck) {
+                            movePuck.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+                        }
+
+                        // Map left joystick to state speed variables
+                        state.touchMoveX = dx / maxRadius;
+                        state.touchMoveY = -dy / maxRadius; // Up is forward (positive)
+                    }
+                    else if (touch.identifier === lookTouchId) {
+                        const dx = touch.clientX - lookLastPos.x;
+                        const dy = touch.clientY - lookLastPos.y;
+
+                        lookLastPos = { x: touch.clientX, y: touch.clientY };
+
+                        if (lookJoystick) {
+                            lookJoystick.style.left = touch.clientX + 'px';
+                            lookJoystick.style.top = touch.clientY + 'px';
+                        }
+
+                        if (state.health > 0) {
+                            yawObject.rotation.y -= dx * touchSensitivity;
+                            pitchObject.rotation.x -= dy * touchSensitivity;
+                            pitchObject.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitchObject.rotation.x));
+                        }
+                    }
+                }
+            }, { passive: false });
+
+            const handleTouchEnd = (e) => {
+                for (let i = 0; i < e.changedTouches.length; i++) {
+                    const touch = e.changedTouches[i];
+
+                    if (touch.identifier === moveTouchId) {
+                        moveTouchId = null;
+                        state.touchMoveX = 0;
+                        state.touchMoveY = 0;
+                        if (moveJoystick) {
+                            moveJoystick.style.display = 'none';
+                        }
+                    }
+                    else if (touch.identifier === lookTouchId) {
+                        lookTouchId = null;
+                        if (lookJoystick) {
+                            lookJoystick.style.display = 'none';
+                        }
+                    }
+                }
+            };
+
+            window.addEventListener('touchend', handleTouchEnd, { passive: false });
+            window.addEventListener('touchcancel', handleTouchEnd, { passive: false });
+
+            // 3. Mobile Action Buttons Event Handling
+            // Jump Button
+            const jumpBtn = document.getElementById('mobile-jump-btn');
+            if (jumpBtn) {
+                jumpBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!state.isPlaying || state.isDying) return;
+
+                    if (state.hasJetPack) {
+                        state.isJetPacking = true;
+                    }
+
+                    if (state.canJump) {
+                        let jumpPower = config.jumpForce;
+                        const speedLvl = (state.shopLevels && state.shopLevels['speed']) ? state.shopLevels['speed'] : 1;
+                        if (state.speedBoostActive) {
+                            if (speedLvl === 1) jumpPower *= 2.5;
+                            else if (speedLvl === 2) jumpPower *= 1.35;
+                            else if (speedLvl === 3) jumpPower *= 1.6;
+                        }
+                        state.velocity.y = jumpPower;
+                        state.canJump = false;
+                        state.jumpCount = 1;
+                        if (typeof AudioSys !== 'undefined' && AudioSys.playJump) AudioSys.playJump(false);
+                    } else if (state.hasDoubleJump && state.jumpCount < 2) {
+                        let jumpPower = config.jumpForce * 1.5;
+                        const speedLvl = (state.shopLevels && state.shopLevels['speed']) ? state.shopLevels['speed'] : 1;
+                        if (state.speedBoostActive) {
+                            if (speedLvl === 1) jumpPower *= 2.5;
+                            else if (speedLvl === 2) jumpPower *= 1.35;
+                            else if (speedLvl === 3) jumpPower *= 1.6;
+                        }
+                        state.velocity.y = jumpPower;
+                        state.jumpCount++;
+                        if (typeof AudioSys !== 'undefined' && AudioSys.playJump) AudioSys.playJump(true);
+
+                        _globalVec1.copy(yawObject.position);
+                        _globalVec1.y -= 1.0;
+                        spawnParticles(_globalVec1, 0x00ffff, 10, 5);
+                    }
+                }, { passive: false });
+
+                jumpBtn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    state.isJetPacking = false;
+                }, { passive: false });
+            }
+
+            // Fire Button
+            const fireBtn = document.getElementById('mobile-fire-btn');
+            if (fireBtn) {
+                fireBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!state.isPlaying || state.isDying) return;
+
+                    if (state.currentWeapon === 'rocket') {
+                        const now = performance.now();
+                        if (now - state.lastShot > 800) {
+                            shoot();
+                            state.lastShot = now;
+                        }
+                    } else if (state.currentWeapon === 'nuke') {
+                        if (state.nukeAmmo > 0) fireNuke();
+                    } else if (state.currentWeapon === 'antidote') {
+                        shoot();
+                    } else {
+                        state.isFiring = true;
+                    }
+                }, { passive: false });
+
+                fireBtn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    state.isFiring = false;
+                }, { passive: false });
+            }
+
+            // Reload Button
+            const reloadBtn = document.getElementById('mobile-reload-btn');
+            if (reloadBtn) {
+                reloadBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!state.isPlaying || state.isDying) return;
+                    reload();
+                }, { passive: false });
+            }
+
+            // Weapon Swap Button
+            const swapBtn = document.getElementById('mobile-swap-btn');
+            if (swapBtn) {
+                swapBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    swapWeapon();
+                }, { passive: false });
+            }
+
+            // ADS Zoom Button
+            const adsBtn = document.getElementById('mobile-ads-btn');
+            if (adsBtn) {
+                adsBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (!state.isPlaying || state.isDying) return;
+
+                    if (targetFOV === 40) {
+                        targetFOV = BASE_FOV;
+                        adsBtn.style.background = 'rgba(153, 51, 255, 0.15)';
+                        adsBtn.style.borderColor = 'rgba(153, 51, 255, 0.5)';
+                    } else {
+                        targetFOV = 40;
+                        adsBtn.style.background = 'rgba(153, 51, 255, 0.6)';
+                        adsBtn.style.borderColor = 'rgba(153, 51, 255, 0.9)';
+                    }
+                }, { passive: false });
+            }
+
+            // Pause Button
+            const pauseBtn = document.getElementById('mobile-pause-btn');
+            if (pauseBtn) {
+                pauseBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    togglePauseMobile();
+                }, { passive: false });
+            }
+        }
 
         // Listeners moved to bottom (Consolidated)
 
@@ -34986,12 +35492,21 @@ function animateShopParticles() {
                     const finalLft = state.isDying ? false : (state.moveLeft || state.padLeft);
                     const finalRgt = state.isDying ? false : (state.moveRight || state.padRight);
 
-                    state.direction.z = Number(finalFwd) - Number(finalBwd);
-                    state.direction.x = Number(finalLft) - Number(finalRgt);
-                    state.direction.normalize();
+                    if (state.isMobile) {
+                        state.direction.x = state.isDying ? 0 : -(state.touchMoveX || 0);
+                        state.direction.z = state.isDying ? 0 : (state.touchMoveY || 0);
+                        const len = Math.sqrt(state.direction.x * state.direction.x + state.direction.z * state.direction.z);
+                        if (len > 1.0) {
+                            state.direction.divideScalar(len);
+                        }
+                    } else {
+                        state.direction.z = Number(finalFwd) - Number(finalBwd);
+                        state.direction.x = Number(finalLft) - Number(finalRgt);
+                        state.direction.normalize();
+                    }
 
                     // --- MOVEMENT RAMP UP LOGIC ---
-                    const isMoving = finalFwd || finalBwd || finalLft || finalRgt;
+                    const isMoving = state.isMobile ? (Math.sqrt(state.direction.x * state.direction.x + state.direction.z * state.direction.z) > 0.05) : (finalFwd || finalBwd || finalLft || finalRgt);
 
                     if (isMoving) {
                         state.moveTime += playerDelta;
@@ -35038,8 +35553,13 @@ function animateShopParticles() {
                         }
                     }
 
-                    if (finalFwd || finalBwd) state.velocity.z -= state.direction.z * effectiveSpeed * 20.0 * playerDelta;
-                    if (finalLft || finalRgt) state.velocity.x -= state.direction.x * effectiveSpeed * 20.0 * playerDelta;
+                    if (state.isMobile) {
+                        state.velocity.z -= state.direction.z * effectiveSpeed * 20.0 * playerDelta;
+                        state.velocity.x -= state.direction.x * effectiveSpeed * 20.0 * playerDelta;
+                    } else {
+                        if (finalFwd || finalBwd) state.velocity.z -= state.direction.z * effectiveSpeed * 20.0 * playerDelta;
+                        if (finalLft || finalRgt) state.velocity.x -= state.direction.x * effectiveSpeed * 20.0 * playerDelta;
+                    }
 
                     _moveDist.copy(state.velocity).multiplyScalar(playerDelta);
                     const playerPos = yawObject.position; // Use direct reference
@@ -35588,7 +36108,7 @@ function animateShopParticles() {
                             updateHUD();
                         }
                         // Phase 4: Return to idle handled by lerp below (2500ms-3000ms)
-                    } else if (state.moveForward || state.moveBackward || state.moveLeft || state.moveRight) {
+                    } else if (state.moveForward || state.moveBackward || state.moveLeft || state.moveRight || (state.isMobile && isMoving)) {
                         const swayX = Math.sin(time * 0.01) * 0.02;
                         const swayY = Math.sin(time * 0.02) * 0.01;
                         targetX += swayX;
@@ -37472,6 +37992,11 @@ function animateShopParticles() {
             state.jumpCount = 0;
             state.speedBoostActive = false;
             state.speedBoostTimer = 0;
+            state.touchMoveX = 0;
+            state.touchMoveY = 0;
+            state.isFiring = false;
+            state.mobileAdsActive = false;
+            if (typeof targetFOV !== 'undefined') targetFOV = BASE_FOV;
 
             // Fix delta spike
             state.lastTime = performance.now();
@@ -37949,10 +38474,15 @@ function animateShopParticles() {
                         UI.overlay.style.opacity = '0';
                         UI.overlay.style.pointerEvents = 'none';
                     }
-                    try {
-                        const p = document.body.requestPointerLock();
-                        if (p) p.catch(e => {});
-                    } catch (e) { console.error('Resume PointerLock Error: ' + e); }
+                    if (!state.isMobile) {
+                        try {
+                            const p = document.body.requestPointerLock();
+                            if (p) p.catch(e => {});
+                        } catch (e) { console.error('Resume PointerLock Error: ' + e); }
+                    } else {
+                        const mobHud = document.getElementById('mobile-hud');
+                        if (mobHud) mobHud.style.display = 'block';
+                    }
 
                     state.isPlaying = true;
                     state.lastTime = performance.now();
@@ -37999,10 +38529,15 @@ function animateShopParticles() {
                 }
 
                 // 4. Pointer Lock & Start Loop
-                try {
-                    const p = document.body.requestPointerLock();
-                    if (p) p.catch(e => {});
-                } catch (e) { console.error('PointerLock Error: ' + e); }
+                if (!state.isMobile) {
+                    try {
+                        const p = document.body.requestPointerLock();
+                        if (p) p.catch(e => {});
+                    } catch (e) { console.error('PointerLock Error: ' + e); }
+                } else {
+                    const mobHud = document.getElementById('mobile-hud');
+                    if (mobHud) mobHud.style.display = 'block';
+                }
 
                 state.isPlaying = true;
                 console.log('Game Started');
@@ -38023,16 +38558,22 @@ function animateShopParticles() {
                 console.log('Restart Clicked');
                 resetGame();
                 if (UI.gameOverOverlay) UI.gameOverOverlay.style.display = 'none';
-                try {
-                    const p = document.body.requestPointerLock();
-                    if (p) p.catch(e => {});
-                } catch (e) { console.warn("Restart PointerLock Error:", e); }
+                if (!state.isMobile) {
+                    try {
+                        const p = document.body.requestPointerLock();
+                        if (p) p.catch(e => {});
+                    } catch (warnE) { console.warn("Restart PointerLock Error:", warnE); }
+                } else {
+                    const mobHud = document.getElementById('mobile-hud');
+                    if (mobHud) mobHud.style.display = 'block';
+                }
                 state.isPlaying = true;
             });
         }
 
         // Pointer Lock State (Consolidated Logic)
         document.addEventListener('pointerlockchange', () => {
+            if (state.isMobile) return;
             const overlay = document.getElementById('overlay');
             const stageInfo = document.getElementById('stage-info');
 
