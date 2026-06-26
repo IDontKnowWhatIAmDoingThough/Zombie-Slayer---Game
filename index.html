@@ -532,6 +532,10 @@
             border: 2px solid #111111 !important;
             text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8) !important;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.1) !important;
+            width: auto !important;
+            min-width: max-content !important;
+            padding: 10px 24px !important; /* Premium horizontal and vertical padding */
+            box-sizing: border-box !important;
         }
 
         .coffee-btn-dark:hover,
@@ -539,6 +543,13 @@
             background: linear-gradient(to bottom, #4a4a4a 0%, #323232 50%, #1c1c1c 51%, #383838 100%) !important;
             box-shadow: 0 0 25px rgba(255, 255, 255, 0.3) !important;
             filter: brightness(1.2) !important;
+        }
+
+        #coffee-btn-mobile.coffee-btn-dark {
+            flex: 0 0 auto !important;
+            width: auto !important;
+            min-width: max-content !important;
+            padding: 10px 24px !important;
         }
 
         /* Game Over Buy me a Coffee Button */
@@ -549,7 +560,8 @@
             margin-top: 20px !important;
             padding: 10px 24px !important;
             font-size: 16px !important;
-            width: 220px !important;
+            width: auto !important;
+            min-width: max-content !important;
             height: 50px !important;
             box-sizing: border-box !important;
         }
@@ -572,7 +584,8 @@
                 font-size: 15px !important;
                 margin-top: 15px !important;
                 height: 45px !important;
-                width: 200px !important;
+                width: auto !important;
+                min-width: max-content !important;
             }
             #game-over-overlay #restart-btn {
                 padding: 12px 30px !important;
@@ -592,7 +605,8 @@
                 font-size: 12px !important;
                 height: 38px !important;
                 margin-top: 10px !important;
-                width: 180px !important;
+                width: auto !important;
+                min-width: max-content !important;
             }
             #game-over-overlay #restart-btn {
                 padding: 6px 16px !important;
@@ -804,8 +818,9 @@
             }
             #mobile-coffee-btn {
                 font-size: 10px !important;
-                padding: 8px 5px !important;
-                width: 125px !important;
+                padding: 8px 15px !important;
+                width: auto !important;
+                min-width: max-content !important;
                 margin-top: 5px !important;
                 justify-content: center !important;
                 align-items: center !important;
@@ -5010,8 +5025,8 @@
     <!-- Mobile HUD Controls (Only visible during gameplay on touch devices) -->
     <div id="mobile-hud" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90000;">
         <!-- Pause Button (Top Left) -->
-        <div id="mobile-pause-btn" class="mobile-action-btn" style="top: 15px; left: 15px; width: 95px; height: 55px; border-radius: 8px; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 90005; display: flex; justify-content: center; align-items: center;">
-            <span style="font-size: 12px; font-weight: bold; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px; line-height: 1.1; text-align: center;">Pause<br>Game</span>
+        <div id="mobile-pause-btn" class="mobile-action-btn" style="top: 15px; left: 15px; width: 80px; height: 44px; border-radius: 8px; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 90005; display: flex; justify-content: center; align-items: center;">
+            <span style="font-size: 11px; font-weight: bold; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px; line-height: 1.1; text-align: center;">Pause<br>Game</span>
         </div>
 
         <!-- Action Buttons Container (Bottom Right) -->
@@ -5229,7 +5244,7 @@
         
         <div id="pause-left-panel" style="width: calc(50% - 450px); display: none; flex-direction: column; justify-content: center; align-items: center; position: absolute; top: 0; left: 0; height: 100%; z-index: 2;" onclick="event.stopPropagation()" onmousedown="event.stopPropagation()" onmouseup="event.stopPropagation()">
             <div style="font-size: 60px; line-height: 1; margin-bottom: 20px;">&#9749;</div>
-            <button class="btn coffee-btn-dark" style="width: 200px; height: 55px; padding: 0; margin: 0; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 18px;" onclick="window.open('https://buymeacoffee.com', '_blank')">
+            <button class="btn coffee-btn-dark" style="width: auto; min-width: max-content; height: 55px; margin: 0; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 18px;" onclick="window.open('https://buymeacoffee.com', '_blank')">
                 <span style="font-size: 1.1em; margin-right: 6px;">☕</span> BUY ME COFFEE
             </button>
         </div>
@@ -5438,7 +5453,15 @@
                         <span style="color: #ffffff;">LEFT STICK</span> - to Move<br>
                         <span style="color: #ffffff;">A BUTTON</span> - to Jump/Double-Jump/Jetpack-Thrust<br>
                         <span style="color: #ffffff;">RIGHT TRIGGER (RT)</span> - to Shoot<br>
-                        <span style="color: #ffffff;">LEFT TRIGGER (LT)</span> - to Zoom/ADS
+                        <span style="color: #ffffff;">LEFT TRIGGER (LT)</span> - to Zoom/ADS<br><br>
+
+                        <div style="color: #fff; border-bottom: 1px solid #555; padding-bottom: 2px; margin-bottom: 5px; display: inline-block;">MOBILE TOUCH CONTROLS</div><br>
+                        <span style="color: #ffffff;">LEFT JOYSTICK</span> - to Move<br>
+                        <span style="color: #ffffff;">RIGHT SCREEN DRAG</span> - to Look/Aim<br>
+                        <span style="color: #ffffff;">SHOOT BUTTON</span> - to Shoot<br>
+                        <span style="color: #ffffff;">AIM BUTTON</span> - to Zoom/ADS<br>
+                        <span style="color: #ffffff;">JUMP BUTTON</span> - to Jump/Double-Jump/Jetpack-Thrust<br>
+                        <span style="color: #ffffff;">WEAPON BUTTON</span> - to Swap Weapon
                     </div>
                 </div>
             </div>
@@ -5452,15 +5475,22 @@
                     </svg>ABOUT
                 </div>
                 <div class="accordion-content">
-                    <p
-                        style="font-size: 16px; line-height: 1.4; text-align: justify; max-width: 500px; margin: 0 auto; color: #ffffff;">
-                        <strong>In a world overrun by a rogue AI that has enslaved humanity through an organic mind-control
-                        virus,</strong> you are one of the few immune survivors left standing. Hunted relentlessly by
-                        AI-controlled zombies, drones, and towering mechs, you take refuge in a forest lookout tower and
-                        fight through escalating waves of enemies. By collecting coins from fallen foes, unlocking
-                        black-market weapons, manipulating the environment, you push back against an enemy that does not
-                        tire.
-                    </p>
+                    <div style="text-align: left; font-weight: normal; color: #ccc; max-width: 500px; margin: 0 auto; line-height: 1.6; font-size: 16px;">
+                        <div style="color: #fff; font-weight: bold; border-bottom: 1px solid #555; padding-bottom: 2px; margin-bottom: 10px; display: inline-block;">STORY</div>
+                        <p style="color: #ffffff; text-align: justify; margin: 0 0 20px 0;">
+                            <strong>In a world overrun by a rogue AI that has enslaved humanity through an organic mind-control
+                            virus,</strong> you are one of the few immune survivors left standing. Hunted relentlessly by
+                            AI-controlled zombies, drones, and towering mechs, you take refuge in a forest lookout tower and
+                            fight through escalating waves of enemies. By collecting coins from fallen foes, unlocking
+                            black-market weapons, and manipulating the environment, you push back against an enemy that does not
+                            tire.
+                        </p>
+
+                        <div style="color: #fff; font-weight: bold; border-bottom: 1px solid #555; padding-bottom: 2px; margin-bottom: 10px; display: inline-block;">THE GAME</div>
+                        <p style="color: #ffffff; text-align: justify; margin: 0; line-height: 1.6;">
+                            This is an arcade-inspired survival game built to run instantly in your web browser with no setup or installation required. The gameplay focuses on classic wave-defense mechanics: holding a defensible lookout tower, managing coins retrieved from fallen foes, and adapting to shifting threats as waves grow larger. It is designed to be a straightforward, pick-up-and-play experience that tests your reflexes and resource management.
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -5497,7 +5527,7 @@
         </style>
         <div id="start-menu-container"
             style="display: none; margin-top: 30px; gap: 20px; justify-content: center; align-items: flex-start;">
-            <button class="btn coffee-btn-dark" id="mobile-coffee-btn" style="display: none; margin-top: 0; width: 140px; height: 50px; font-size: 13px; padding: 0; align-items: center; justify-content: center;" onclick="window.open('https://buymeacoffee.com', '_blank')"><span style="font-size: 1.1em; margin-right: 6px;">☕</span> BUY ME COFFEE</button>
+            <button class="btn coffee-btn-dark" id="mobile-coffee-btn" style="display: none; margin-top: 0; width: auto; min-width: max-content; height: 50px; font-size: 13px; align-items: center; justify-content: center;" onclick="window.open('https://buymeacoffee.com', '_blank')"><span style="font-size: 1.1em; margin-right: 6px;">☕</span> BUY ME COFFEE</button>
             <button class="btn" id="start-btn" style="margin-top: 0; width: 280px;">PLAY</button>
             <div id="multiplayer-btn-container" style="display: flex; flex-direction: column; align-items: center;">
                 <button class="btn" id="multiplayer-btn"
@@ -5530,7 +5560,7 @@
         
         <div id="shop-left-panel" onclick="event.stopPropagation()" onmousedown="event.stopPropagation()" onmouseup="event.stopPropagation()">
             <div style="font-size: 60px; line-height: 1; margin-bottom: 20px;">&#9749;</div>
-            <button id="coffee-btn" class="btn coffee-btn-dark" style="width: 280px; height: 75px; padding: 0; margin: 0; text-decoration: none; display: flex; align-items: center; justify-content: center;" onclick="window.open('https://buymeacoffee.com', '_blank')">
+            <button id="coffee-btn" class="btn coffee-btn-dark" style="width: auto; min-width: max-content; height: 75px; margin: 0; text-decoration: none; display: flex; align-items: center; justify-content: center;" onclick="window.open('https://buymeacoffee.com', '_blank')">
                 <span style="font-size: 1.1em; margin-right: 6px;">☕</span> BUY ME A COFFEE
             </button>
         </div>
@@ -8367,7 +8397,7 @@
         // scene.fog = new THREE.Fog(horizonColor, 5, MAX_DRAW_DIST);
 
         // Dynamic FOV Base
-        let BASE_FOV = 88;
+        let BASE_FOV = isMobileDevice ? 75 : 88;
 
         // Dynamic Max Particles
         let MAX_PARTICLES = 100000;
@@ -9037,7 +9067,7 @@
                 "tDiffuse": { value: null },
                 "resolution": { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
                 "chromaticAmount": { value: 0.025 },
-                "fisheyeStrength": { value: 0.6 },
+                "fisheyeStrength": { value: isMobileDevice ? 0.4 : 0.6 },
                 "grainStrength": { value: 0.0 },
                 "noiseSeed": { value: 0.0 },
                 "sharpnessStrength": { value: 0.3 }, // 0.0 to 1.0 (scales sharpness mix)
@@ -30064,7 +30094,14 @@ function animateShopParticles() {
         };
 
         // Helper to pause/unpause on mobile pause button tap
+        let lastPauseToggleTime = 0;
         window.togglePauseMobile = function() {
+            const now = performance.now();
+            if (now - lastPauseToggleTime < 350) {
+                console.log("Pause toggle debounced");
+                return;
+            }
+            lastPauseToggleTime = now;
             const overlay = document.getElementById('overlay');
             const stageInfo = document.getElementById('stage-info');
 
@@ -35667,8 +35704,8 @@ function animateShopParticles() {
                 if (compositePass) {
                     compositePass.uniforms['noiseSeed'].value = Math.random();
                     const isFisheyeOn = cachedSettings.fisheyeEnabled;
-                    // Maintain default gameplay setting (0.6 if enabled, 0.0 if disabled) with no adjustment for menu states
-                    const targetFisheye = isFisheyeOn ? 0.6 : 0.0;
+                    // Maintain default gameplay setting (0.4 on mobile / 0.6 on desktop if enabled, 0.0 if disabled) with no adjustment for menu states
+                    const targetFisheye = isFisheyeOn ? (isMobileDevice ? 0.4 : 0.6) : 0.0;
                     let currentFisheye = compositePass.uniforms['fisheyeStrength'].value;
                     if (currentFisheye !== targetFisheye) {
                         const fisheyeSpeed = 8.0; // Smooth transition
@@ -43058,7 +43095,11 @@ function animateShopParticles() {
                             pointer-events: none;
                         `;
 
-                        const isMobileLayout = state.isMobile || window.innerWidth <= 950;
+                        if (state.isMobile || window.innerWidth <= 950) {
+                            state._forceSmallWeaponWheel = true;
+                        }
+                        const isMobileLayout = state._forceSmallWeaponWheel || state.isMobile || window.innerWidth <= 950;
+                        
                         let boxWidth, boxHeight, inactiveBoxWidth, inactiveBoxHeight;
                         if (isMobileLayout) {
                             boxWidth = 32;
@@ -43579,7 +43620,7 @@ function animateShopParticles() {
                 compositePass.uniforms['fisheyeStrength'].value = 0.0;
             } else {
                 if (compositePass.uniforms['fisheyeStrength'].value === 0.0) {
-                    compositePass.uniforms['fisheyeStrength'].value = 0.6;
+                    compositePass.uniforms['fisheyeStrength'].value = isMobileDevice ? 0.4 : 0.6;
                 }
             }
 
