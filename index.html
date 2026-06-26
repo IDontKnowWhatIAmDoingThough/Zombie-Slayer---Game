@@ -525,36 +525,33 @@
             }
         }
 
-        /* Game Over Left Panel (Buy me a Coffee) */
-        .game-over-left-panel {
-            width: calc(50% - 450px);
-            background: transparent;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            z-index: 10;
+        /* Metallic Black Coffee Button Style */
+        .coffee-btn-dark {
+            background: linear-gradient(to bottom, #3a3a3a 0%, #222222 50%, #0c0c0c 51%, #282828 100%) !important;
+            color: #ffffff !important;
+            border: 2px solid #111111 !important;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8) !important;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1) !important;
         }
 
-        .game-over-desktop-coffee-btn {
-            width: 220px !important;
-            height: 55px !important;
-            font-size: 16px !important;
-            padding: 0 !important;
-            margin: 0 !important;
+        .coffee-btn-dark:hover,
+        .coffee-btn-dark.gamepad-focus {
+            background: linear-gradient(to bottom, #4a4a4a 0%, #323232 50%, #1c1c1c 51%, #383838 100%) !important;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3) !important;
+            filter: brightness(1.2) !important;
+        }
+
+        /* Game Over Buy me a Coffee Button */
+        .game-over-coffee-btn {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-        }
-
-        /* Inline button for mobile, hidden by default on desktop */
-        .game-over-mobile-coffee {
-            display: none;
+            margin-top: 20px !important;
+            padding: 10px 24px !important;
+            font-size: 16px !important;
+            width: 220px !important;
+            height: 50px !important;
+            box-sizing: border-box !important;
         }
 
         .game-over-buttons-row {
@@ -568,16 +565,14 @@
             flex-wrap: wrap;
         }
 
-        /* On screens narrower than 1200px or heights under 600px, hide the left panel and show the inline button */
+        /* On screens narrower than 1200px or heights under 600px */
         @media (max-width: 1200px), (max-height: 600px) {
-            .game-over-left-panel {
-                display: none !important;
-            }
-            .game-over-mobile-coffee {
-                display: flex !important;
-                padding: 10px 24px !important;
-                font-size: 16px !important;
-                margin-top: 0 !important;
+            .game-over-coffee-btn {
+                padding: 8px 20px !important;
+                font-size: 15px !important;
+                margin-top: 15px !important;
+                height: 45px !important;
+                width: 200px !important;
             }
             #game-over-overlay #restart-btn {
                 padding: 12px 30px !important;
@@ -592,10 +587,12 @@
                 margin-top: 10px !important;
             }
             /* On landscape/short height screens, make the buttons even smaller */
-            .game-over-mobile-coffee {
+            .game-over-coffee-btn {
                 padding: 5px 12px !important;
                 font-size: 12px !important;
-                margin-top: 0 !important;
+                height: 38px !important;
+                margin-top: 10px !important;
+                width: 180px !important;
             }
             #game-over-overlay #restart-btn {
                 padding: 6px 16px !important;
@@ -806,9 +803,9 @@
                 margin-top: 5px !important;
             }
             #mobile-coffee-btn {
-                font-size: 11px !important;
-                padding: 8px 10px !important;
-                width: 100px !important;
+                font-size: 10px !important;
+                padding: 8px 5px !important;
+                width: 125px !important;
                 margin-top: 5px !important;
                 justify-content: center !important;
                 align-items: center !important;
@@ -1106,28 +1103,24 @@
             .stat-box {
                 padding: 6px 10px !important;
             }
-            #weapon-icons-row {
-                transform: scale(0.8) !important;
-                transform-origin: right bottom !important;
-            }
             .mobile-action-btn {
                 transform: scale(0.85) !important;
             }
             #mobile-jump-btn {
-                bottom: 110px !important;
-                right: 15px !important;
+                bottom: 155px !important;
+                right: 60px !important;
             }
             #mobile-fire-btn {
-                bottom: 15px !important;
-                right: 95px !important;
+                bottom: 60px !important;
+                right: 140px !important;
             }
             #mobile-swap-btn {
-                bottom: 190px !important;
-                right: 15px !important;
+                bottom: 235px !important;
+                right: 60px !important;
             }
             #mobile-ads-btn {
-                bottom: 110px !important;
-                right: 95px !important;
+                bottom: 155px !important;
+                right: 140px !important;
             }
         }
 
@@ -1298,6 +1291,11 @@
             filter: brightness(1.2);
             /* Shine effect */
             box-shadow: 0 0 25px #0ff;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+            filter: brightness(0.9);
         }
 
         .hit-marker-3d {
@@ -2922,10 +2920,51 @@
             pointer-events: auto;
             user-select: none;
             -webkit-user-select: none;
-            transition: transform 0.1s ease, background-color 0.1s ease;
+            transition: transform 0.1s ease, background-color 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease;
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
             box-sizing: border-box;
+        }
+        .mobile-action-btn:active,
+        .mobile-action-btn.active {
+            transform: scale(0.75) !important;
+            filter: brightness(1.4);
+        }
+        #mobile-jump-btn:active,
+        #mobile-jump-btn.active {
+            background: rgba(0, 255, 255, 0.35) !important;
+            border-color: rgba(0, 255, 255, 0.8) !important;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.7), inset 0 0 8px rgba(0, 255, 255, 0.5) !important;
+        }
+        #mobile-jump-btn.has-jetpack:active,
+        #mobile-jump-btn.has-jetpack.active {
+            background: rgba(255, 170, 0, 0.35) !important;
+            border-color: rgba(255, 170, 0, 0.7) !important;
+            box-shadow: 0 0 20px rgba(255, 170, 0, 0.7), inset 0 0 8px rgba(255, 170, 0, 0.5) !important;
+        }
+        #mobile-fire-btn:active,
+        #mobile-fire-btn.active {
+            background: rgba(255, 68, 68, 0.45) !important;
+            border-color: rgba(255, 68, 68, 0.9) !important;
+            box-shadow: 0 0 25px rgba(255, 68, 68, 0.8), inset 0 0 10px rgba(255, 68, 68, 0.6) !important;
+        }
+        #mobile-swap-btn:active,
+        #mobile-swap-btn.active {
+            background: rgba(255, 255, 255, 0.3) !important;
+            border-color: rgba(255, 255, 255, 0.7) !important;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.4) !important;
+        }
+        #mobile-ads-btn:active,
+        #mobile-ads-btn.active {
+            background: rgba(153, 51, 255, 0.35) !important;
+            border-color: rgba(153, 51, 255, 0.8) !important;
+            box-shadow: 0 0 20px rgba(153, 51, 255, 0.7), inset 0 0 8px rgba(153, 51, 255, 0.5) !important;
+        }
+        #mobile-pause-btn:active,
+        #mobile-pause-btn.active {
+            background: rgba(50, 50, 50, 0.8) !important;
+            border-color: rgba(255, 255, 255, 0.7) !important;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.3) !important;
         }
         #game-container {
             width: 100%;
@@ -2993,6 +3032,12 @@
     <script src="https://unpkg.com/three@0.128.0/examples/js/geometries/TextGeometry.js"></script>
     <script src="https://unpkg.com/three@0.128.0/examples/js/utils/BufferGeometryUtils.js"></script>
     <script>
+        const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+            || (navigator.maxTouchPoints > 0)
+            || ('ontouchstart' in window)
+            || window.location.search.includes('touch=true')
+            || window.location.search.includes('mobile=true');
+
         // --- GLOBAL EXPONENTIAL HEIGHT FOG INJECTION ---
         THREE.ShaderChunk.fog_pars_vertex = `
         #ifdef USE_FOG
@@ -3144,6 +3189,8 @@
         let _drsCurrentRatio = 1.25; // Will be clamped to devicePixelRatio
         let _drsLastScaleDownTime = 0;
         let _drsLowFpsCount = 0; // Counter for sustained low FPS
+        let _drsMaxStableRatio = 999.0; // Dynamically restricted if a scale-up fails
+        let _drsLastScaleUpTime = 0;
         
         let terrainHeightGrid = null;
         const GRID_MIN = -200;
@@ -4963,14 +5010,14 @@
     <!-- Mobile HUD Controls (Only visible during gameplay on touch devices) -->
     <div id="mobile-hud" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90000;">
         <!-- Pause Button (Top Left) -->
-        <div id="mobile-pause-btn" class="mobile-action-btn" style="top: 20px; left: 20px; width: 85px; height: 42px; border-radius: 6px; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 90005; display: flex; justify-content: center; align-items: center;">
-            <span style="font-size: 10px; font-weight: bold; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px; line-height: 1.1; text-align: center;">Pause<br>Game</span>
+        <div id="mobile-pause-btn" class="mobile-action-btn" style="top: 15px; left: 15px; width: 95px; height: 55px; border-radius: 8px; background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 90005; display: flex; justify-content: center; align-items: center;">
+            <span style="font-size: 12px; font-weight: bold; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; letter-spacing: 0.5px; line-height: 1.1; text-align: center;">Pause<br>Game</span>
         </div>
 
         <!-- Action Buttons Container (Bottom Right) -->
         <div id="mobile-action-container" style="position: absolute; bottom: 0; right: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 0.25s ease-in-out; z-index: 90005;">
             <!-- Jump Button -->
-            <div id="mobile-jump-btn" class="mobile-action-btn" style="bottom: 120px; right: 20px; width: 75px; height: 75px; background: rgba(0, 255, 255, 0.15); border: 2px solid rgba(0, 255, 255, 0.5); box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);">
+            <div id="mobile-jump-btn" class="mobile-action-btn" style="bottom: 165px; right: 65px; width: 75px; height: 75px; background: rgba(0, 255, 255, 0.15); border: 2px solid rgba(0, 255, 255, 0.5); box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);">
                 <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 2px;">
                     <polyline points="17 11 12 6 7 11"></polyline>
                     <polyline points="17 18 12 13 7 18"></polyline>
@@ -4979,7 +5026,7 @@
             </div>
             
             <!-- Fire/Shoot Button -->
-            <div id="mobile-fire-btn" class="mobile-action-btn" style="bottom: 25px; right: 115px; width: 90px; height: 90px; background: rgba(255, 68, 68, 0.2); border: 2px solid rgba(255, 68, 68, 0.6); box-shadow: 0 0 15px rgba(255, 68, 68, 0.4); z-index: 90005;">
+            <div id="mobile-fire-btn" class="mobile-action-btn" style="bottom: 70px; right: 160px; width: 90px; height: 90px; background: rgba(255, 68, 68, 0.2); border: 2px solid rgba(255, 68, 68, 0.6); box-shadow: 0 0 15px rgba(255, 68, 68, 0.4); z-index: 90005;">
                 <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor" style="transform: rotate(45deg); margin-bottom: 4px;">
                     <!-- Bullet 1 -->
                     <path d="M5 7c0-2 1-3.5 1.5-3.5S8 5 8 7v9c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1V7z" opacity="0.75" />
@@ -4992,7 +5039,7 @@
             </div>
 
             <!-- Weapon Swap Button -->
-            <div id="mobile-swap-btn" class="mobile-action-btn" style="bottom: 215px; right: 20px; width: 65px; height: 65px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);">
+            <div id="mobile-swap-btn" class="mobile-action-btn" style="bottom: 260px; right: 65px; width: 65px; height: 65px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.4); box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 2px;">
                     <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
                     <polyline points="3 3 3 8 8 8"></polyline>
@@ -5003,7 +5050,7 @@
             </div>
 
             <!-- ADS Zoom Button -->
-            <div id="mobile-ads-btn" class="mobile-action-btn" style="bottom: 125px; right: 115px; width: 65px; height: 65px; background: rgba(153, 51, 255, 0.15); border: 2px solid rgba(153, 51, 255, 0.5); box-shadow: 0 0 10px rgba(153, 51, 255, 0.3);">
+            <div id="mobile-ads-btn" class="mobile-action-btn" style="bottom: 170px; right: 160px; width: 65px; height: 65px; background: rgba(153, 51, 255, 0.15); border: 2px solid rgba(153, 51, 255, 0.5); box-shadow: 0 0 10px rgba(153, 51, 255, 0.3);">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 2px;">
                     <!-- Outer scope ring -->
                     <circle cx="12" cy="12" r="9"></circle>
@@ -5182,8 +5229,8 @@
         
         <div id="pause-left-panel" style="width: calc(50% - 450px); display: none; flex-direction: column; justify-content: center; align-items: center; position: absolute; top: 0; left: 0; height: 100%; z-index: 2;" onclick="event.stopPropagation()" onmousedown="event.stopPropagation()" onmouseup="event.stopPropagation()">
             <div style="font-size: 60px; line-height: 1; margin-bottom: 20px;">&#9749;</div>
-            <button class="btn" style="width: 280px; height: 75px; padding: 0; margin: 0; text-decoration: none; display: flex; align-items: center; justify-content: center;" onclick="window.open('https://buymeacoffee.com', '_blank')">
-                BUY ME A COFFEE
+            <button class="btn coffee-btn-dark" style="width: 200px; height: 55px; padding: 0; margin: 0; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 18px;" onclick="window.open('https://buymeacoffee.com', '_blank')">
+                <span style="font-size: 1.1em; margin-right: 6px;">☕</span> BUY ME COFFEE
             </button>
         </div>
 
@@ -5219,6 +5266,25 @@
                             <div style="display: flex; gap: 10px;">
                                 <button class="option-btn small" id="music-on-btn" onclick="setMusic(true)">ON</button>
                                 <button class="option-btn small" id="music-off-btn" onclick="setMusic(false)">OFF</button>
+                            </div>
+                        </div>
+
+                        <!-- UI -->
+                        <div style="width: 100%; max-width: 320px; text-align: center; border-bottom: 1px solid rgba(255,170,0,0.3); padding-bottom: 4px; margin-top: 15px; margin-bottom: 5px; font-size: 13px; letter-spacing: 2px; color: #ffaa00; font-weight: bold;">UI</div>
+
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <span style="width: 150px; text-align: right; font-weight: bold;">COMPASS</span>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="option-btn small" id="compass-on-btn" onclick="setCompassEnabled(true)">ON</button>
+                                <button class="option-btn small" id="compass-off-btn" onclick="setCompassEnabled(false)">OFF</button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <span style="width: 150px; text-align: right; font-weight: bold;">OBJECTIVES</span>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="option-btn small" id="objectives-on-btn" onclick="setObjectivesEnabled(true)">ON</button>
+                                <button class="option-btn small" id="objectives-off-btn" onclick="setObjectivesEnabled(false)">OFF</button>
                             </div>
                         </div>
 
@@ -5296,6 +5362,14 @@
 
                         <!-- SCREEN EFFECTS -->
                         <div style="width: 100%; max-width: 320px; text-align: center; border-bottom: 1px solid rgba(255,170,0,0.3); padding-bottom: 4px; margin-top: 15px; margin-bottom: 5px; font-size: 13px; letter-spacing: 2px; color: #ffaa00; font-weight: bold;">SCREEN EFFECTS</div>
+
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <span style="width: 150px; text-align: right; font-weight: bold;">FISHEYE LENS</span>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="option-btn small" id="fisheye-on-btn" onclick="setFisheye(true)">ON</button>
+                                <button class="option-btn small" id="fisheye-off-btn" onclick="setFisheye(false)">OFF</button>
+                            </div>
+                        </div>
 
                         <div style="display: flex; align-items: center; gap: 20px;">
                             <span style="width: 150px; text-align: right; font-weight: bold;">CHROMATIC ABERRATION</span>
@@ -5414,10 +5488,16 @@
                 filter: grayscale(100%);
                 box-shadow: none;
             }
+            body.hide-stage-info #stage-info {
+                display: none !important;
+            }
+            body.hide-compass #compass-container {
+                display: none !important;
+            }
         </style>
         <div id="start-menu-container"
             style="display: none; margin-top: 30px; gap: 20px; justify-content: center; align-items: flex-start;">
-            <button class="btn" id="mobile-coffee-btn" style="display: none; margin-top: 0; width: 140px; height: 50px; font-size: 14px; padding: 0; align-items: center; justify-content: center;" onclick="window.open('https://buymeacoffee.com', '_blank')">COFFEE ☕</button>
+            <button class="btn coffee-btn-dark" id="mobile-coffee-btn" style="display: none; margin-top: 0; width: 140px; height: 50px; font-size: 13px; padding: 0; align-items: center; justify-content: center;" onclick="window.open('https://buymeacoffee.com', '_blank')"><span style="font-size: 1.1em; margin-right: 6px;">☕</span> BUY ME COFFEE</button>
             <button class="btn" id="start-btn" style="margin-top: 0; width: 280px;">PLAY</button>
             <div id="multiplayer-btn-container" style="display: flex; flex-direction: column; align-items: center;">
                 <button class="btn" id="multiplayer-btn"
@@ -5450,8 +5530,8 @@
         
         <div id="shop-left-panel" onclick="event.stopPropagation()" onmousedown="event.stopPropagation()" onmouseup="event.stopPropagation()">
             <div style="font-size: 60px; line-height: 1; margin-bottom: 20px;">&#9749;</div>
-            <button id="coffee-btn" class="btn" style="width: 280px; height: 75px; padding: 0; margin: 0; text-decoration: none; display: flex; align-items: center; justify-content: center;" onclick="window.open('https://buymeacoffee.com', '_blank')">
-                BUY ME A COFFEE
+            <button id="coffee-btn" class="btn coffee-btn-dark" style="width: 280px; height: 75px; padding: 0; margin: 0; text-decoration: none; display: flex; align-items: center; justify-content: center;" onclick="window.open('https://buymeacoffee.com', '_blank')">
+                <span style="font-size: 1.1em; margin-right: 6px;">☕</span> BUY ME A COFFEE
             </button>
         </div>
 
@@ -5867,8 +5947,8 @@
             
             <!-- MOBILE ONLY BUTTONS -->
             <div id="shop-mobile-buttons" class="mobile-only-shop-element" onclick="event.stopPropagation()" onmousedown="event.stopPropagation()" onmouseup="event.stopPropagation()">
-                <button id="coffee-btn-mobile" class="btn" onclick="window.open('https://buymeacoffee.com', '_blank')">
-                    BUY ME A COFFEE ☕
+                <button id="coffee-btn-mobile" class="btn coffee-btn-dark" onclick="window.open('https://buymeacoffee.com', '_blank')">
+                    <span style="font-size: 1.1em; margin-right: 6px;">☕</span> BUY ME A COFFEE
                 </button>
                 <button id="shop-continue-btn-mobile" class="btn" onclick="ShopManager.close()">
                     CONTINUE FIGHT
@@ -5882,13 +5962,6 @@
 
     <!-- Game Over Menu -->
     <div id="game-over-overlay" class="fullscreen-overlay" style="display: none;">
-        <div class="game-over-left-panel" onclick="event.stopPropagation()" onmousedown="event.stopPropagation()" onmouseup="event.stopPropagation()">
-            <div style="font-size: 40px; line-height: 1; margin-bottom: 15px;">&#9749;</div>
-            <button class="btn game-over-desktop-coffee-btn" onclick="window.open('https://buymeacoffee.com', '_blank')">
-                BUY ME A COFFEE
-            </button>
-        </div>
-
         <h1 class="game-over-title">Terminated</h1>
         <p id="final-max-coins" class="game-over-highlight">Total Coins: 0</p>
         <p id="final-time-alive" class="game-over-subhighlight">Time Alive: 0s</p>
@@ -5907,11 +5980,12 @@
         </div>
  
         <div class="game-over-buttons-row">
-            <button class="btn game-over-mobile-coffee" onclick="window.open('https://buymeacoffee.com', '_blank')">
-                <span style="font-size: 1.2em; margin-right: 6px;">&#9749;</span> BUY ME A COFFEE
-            </button>
             <button class="btn" id="restart-btn">RESURRECT</button>
         </div>
+
+        <button class="btn game-over-coffee-btn coffee-btn-dark" onclick="window.open('https://buymeacoffee.com', '_blank')">
+            <span style="font-size: 1.1em; margin-right: 6px;">☕</span> BUY ME A COFFEE
+        </button>
     </div>
 
     <script>
@@ -5920,19 +5994,25 @@
         }
 
         const cachedSettings = {
-            fisheyeEnabled: true,
+            fisheyeEnabled: localStorage.getItem('martins_fisheye_enabled') !== 'false',
             windEnabled: localStorage.getItem('martins_wind_enabled') !== 'false',
-            chromaticEnabled: localStorage.getItem('martins_chromatic_enabled') !== 'false',
-            grainEnabled: localStorage.getItem('martins_grain_enabled') === 'true',
+            chromaticEnabled: localStorage.getItem('martins_chromatic_enabled') !== null
+                ? localStorage.getItem('martins_chromatic_enabled') !== 'false'
+                : !isMobileDevice,
+            grainEnabled: localStorage.getItem('martins_grain_enabled') !== 'false',
             sharpnessEnabled: localStorage.getItem('martins_sharpness_enabled') !== 'false',
             bloomSetting: localStorage.getItem('martins_bloom_setting') || 'DEFAULT',
             lensflareEnabled: localStorage.getItem('martins_lensflare_enabled') !== 'false',
             godRaysEnabled: localStorage.getItem('martins_godrays_enabled') !== 'false',
-            flashlightShadows: localStorage.getItem('martins_flashlight_shadows') === 'true',
+            flashlightShadows: localStorage.getItem('martins_flashlight_shadows') !== 'false',
             allShadowsEnabled: localStorage.getItem('martins_all_shadows_enabled') !== 'false',
             acesEnabled: true,
             groundFogEnabled: localStorage.getItem('martins_ground_fog_enabled') !== 'false',
             fpsEnabled: localStorage.getItem('martins_fps_counter_enabled') === 'true',
+            compassEnabled: localStorage.getItem('martins_compass_enabled') !== null
+                ? localStorage.getItem('martins_compass_enabled') !== 'false'
+                : !isMobileDevice,
+            objectivesEnabled: localStorage.getItem('martins_objectives_enabled') !== 'false',
         };
 
         /**
@@ -6095,11 +6175,7 @@
         }
 
         const state = {
-            isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-                || (navigator.maxTouchPoints > 0)
-                || ('ontouchstart' in window)
-                || window.location.search.includes('touch=true')
-                || window.location.search.includes('mobile=true'),
+            isMobile: isMobileDevice,
             touchMoveX: 0,
             touchMoveY: 0,
             isPlaying: false,
@@ -6215,8 +6291,28 @@
             skyFlashIdx: 0,
             skyFireIdx: 0,
             skySmokeIdx: 0,
-            skyMissileTemplate: null
+            skyMissileTemplate: null,
+            pauseStartTime: null
         };
+
+        function pauseGame() {
+            if (state.isPlaying) {
+                state.isPlaying = false;
+                state.pauseStartTime = performance.now();
+            }
+        }
+
+        function resumeGame() {
+            if (!state.isPlaying) {
+                state.isPlaying = true;
+                if (state.pauseStartTime) {
+                    const pauseDuration = performance.now() - state.pauseStartTime;
+                    state.startTime += pauseDuration;
+                    state.pauseStartTime = null;
+                }
+                state.lastTime = performance.now(); // Sync physics delta
+            }
+        }
 
         // --- DEBUG LOGGER REMOVED ---
 
@@ -8359,7 +8455,7 @@
         })();
 
         // PERFORMANCE FIX: Dynamic Resolution Scaling (DRS) initialized here
-        _drsCurrentRatio = 1.0; // PERFORMANCE FIX: Lock pixel ratio to 1.0. 1.25 on Retina displays pushes too many pixels for complex WebGL scenes.
+        _drsCurrentRatio = state.isMobile ? Math.min(window.devicePixelRatio || 1, 1.5) : 1.0;
         renderer.setPixelRatio(_drsCurrentRatio);
 
         // camera.layers.enable(1); // Already enabled earlier at scene setup
@@ -9184,7 +9280,7 @@
             camera.updateProjectionMatrix();
 
             // Respect DRS: Keep current dynamic ratio, but clamp it to the (possibly new) monitor's devicePixelRatio limit
-            const maxRatio = Math.min(window.devicePixelRatio || 1, 1.25);
+            const maxRatio = Math.min(window.devicePixelRatio || 1, state.isMobile ? 1.5 : 1.25);
             if (_drsCurrentRatio > maxRatio) {
                 _drsCurrentRatio = maxRatio;
             }
@@ -13925,7 +14021,7 @@ function animateShopParticles() {
                 }
 
                 // Pause Game
-                state.isPlaying = false;
+                pauseGame();
                 if (!state.isMobile) {
                     document.exitPointerLock();
                 } else {
@@ -13972,7 +14068,7 @@ function animateShopParticles() {
                 if (canvas) canvas.classList.remove('grayscale-effect');
 
                 // Resume Game & Next Stage
-                state.isPlaying = true;
+                resumeGame();
                 if (!state.isMobile) {
                     try {
                         const p = document.body.requestPointerLock();
@@ -15001,7 +15097,7 @@ function animateShopParticles() {
                 if (canvas) canvas.classList.remove('grayscale-effect');
 
                 // Resume Game play mode
-                state.isPlaying = true;
+                resumeGame();
                 try {
                     const p = document.body.requestPointerLock();
                     if (p) p.catch(e => {});
@@ -19204,7 +19300,7 @@ function animateShopParticles() {
         window.grassBladeMat = bladeMat;
 
         // Adjusted grass count based on User Setting (Lowered for Performance)
-        const userGrassSetting = localStorage.getItem('martins_grass_density') || 'MEDIUM';
+        const userGrassSetting = localStorage.getItem('martins_grass_density') || 'HIGH';
         let mainGrassCount = 180000; // Was 480000, lowered to massively improve framerate
         let boulderGrassCount = 5000;
         if (userGrassSetting === 'ULTRA') {
@@ -29437,8 +29533,13 @@ function animateShopParticles() {
             if (state.health <= 0) return; // Prevent turning/looking around when dead
 
             if (document.pointerLockElement === document.body) {
-                yawObject.rotation.y -= event.movementX * config.mouseSensitivity;
-                pitchObject.rotation.x -= event.movementY * config.mouseSensitivity;
+                // Reduce sensitivity if Aiming Down Sights (Zoomed in)
+                let isAds = false;
+                if (typeof targetFOV !== 'undefined' && targetFOV <= 50) isAds = true;
+                const adsMult = isAds ? 0.4 : 1.0;
+
+                yawObject.rotation.y -= event.movementX * config.mouseSensitivity * adsMult;
+                pitchObject.rotation.x -= event.movementY * config.mouseSensitivity * adsMult;
                 pitchObject.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitchObject.rotation.x));
             }
         });
@@ -29928,6 +30029,40 @@ function animateShopParticles() {
             }
         }
 
+        // Helper to update mobile jump button state based on jetpack ownership
+        window.updateMobileJumpButtonState = function() {
+            const btn = document.getElementById('mobile-jump-btn');
+            if (!btn) return;
+            
+            if (state.hasJetPack) {
+                btn.classList.add('has-jetpack');
+                btn.style.background = 'rgba(255, 170, 0, 0.15)';
+                btn.style.border = '2px solid rgba(255, 170, 0, 0.5)';
+                btn.style.boxShadow = '0 0 10px rgba(255, 170, 0, 0.3)';
+                btn.innerHTML = `
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" stroke="none" style="margin-bottom: 2px; color: #ff7700;">
+                        <rect x="4.5" y="3" width="4.5" height="13" rx="2" />
+                        <rect x="15" y="3" width="4.5" height="13" rx="2" />
+                        <rect x="8.5" y="6" width="7" height="6" rx="1.2" opacity="0.9" />
+                        <path d="M5 16 L4 19 H9.5 L8.5 16 Z M15.5 16 L14.5 19 H20 L19 16 Z" />
+                    </svg>
+                    <span style="font-size: 10px; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; font-weight: bold;">Jetpack</span>
+                `;
+            } else {
+                btn.classList.remove('has-jetpack');
+                btn.style.background = 'rgba(0, 255, 255, 0.15)';
+                btn.style.border = '2px solid rgba(0, 255, 255, 0.5)';
+                btn.style.boxShadow = '0 0 10px rgba(0, 255, 255, 0.3)';
+                btn.innerHTML = `
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 2px;">
+                        <polyline points="17 11 12 6 7 11"></polyline>
+                        <polyline points="17 18 12 13 7 18"></polyline>
+                    </svg>
+                    <span style="font-size: 10px; text-transform: uppercase; font-family: 'Rajdhani', sans-serif; font-weight: bold;">Jump</span>
+                `;
+            }
+        };
+
         // Helper to pause/unpause on mobile pause button tap
         window.togglePauseMobile = function() {
             const overlay = document.getElementById('overlay');
@@ -29946,7 +30081,7 @@ function animateShopParticles() {
 
             if (!state.isPlaying) {
                 // Resume game
-                state.isPlaying = true;
+                resumeGame();
                 if (overlay) {
                     overlay.style.display = 'none';
                     overlay.style.opacity = '0';
@@ -29955,10 +30090,9 @@ function animateShopParticles() {
                 const mobHud = document.getElementById('mobile-hud');
                 if (mobHud) mobHud.style.display = 'block';
                 if (stageInfo) stageInfo.style.display = 'block';
-                state.lastTime = performance.now();
             } else {
                 // Pause game
-                state.isPlaying = false;
+                pauseGame();
                 state.isFiring = false;
                 state.touchMoveX = 0;
                 state.touchMoveY = 0;
@@ -30029,7 +30163,7 @@ function animateShopParticles() {
                     actionContainer.style.opacity = '0';
                     actionContainer.style.pointerEvents = 'none';
                     actionBtnFadeTimeout = null;
-                }, 3000);
+                }, 1500);
             }
 
             function checkRightTouches(e) {
@@ -30167,8 +30301,13 @@ function animateShopParticles() {
                         }
 
                         if (state.health > 0) {
-                            yawObject.rotation.y -= dx * touchSensitivity;
-                            pitchObject.rotation.x -= dy * touchSensitivity;
+                            // Reduce sensitivity if Aiming Down Sights (Zoomed in)
+                            let isAds = false;
+                            if (typeof targetFOV !== 'undefined' && targetFOV <= 50) isAds = true;
+                            const adsMult = isAds ? 0.4 : 1.0;
+
+                            yawObject.rotation.y -= dx * touchSensitivity * adsMult;
+                            pitchObject.rotation.x -= dy * touchSensitivity * adsMult;
                             pitchObject.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitchObject.rotation.x));
                         }
                     }
@@ -30198,6 +30337,30 @@ function animateShopParticles() {
 
             window.addEventListener('touchend', handleTouchEnd, { passive: false });
             window.addEventListener('touchcancel', handleTouchEnd, { passive: false });
+
+            // Add press feedback behavior to all mobile action buttons
+            document.querySelectorAll('.mobile-action-btn').forEach(btn => {
+                btn.addEventListener('touchstart', () => {
+                    btn.classList.add('active');
+                }, { passive: true });
+                btn.addEventListener('touchend', () => {
+                    btn.classList.remove('active');
+                }, { passive: true });
+                btn.addEventListener('touchcancel', () => {
+                    btn.classList.remove('active');
+                }, { passive: true });
+                
+                // Also support mouse clicks for simulation/testing
+                btn.addEventListener('mousedown', () => {
+                    btn.classList.add('active');
+                });
+                btn.addEventListener('mouseup', () => {
+                    btn.classList.remove('active');
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.classList.remove('active');
+                });
+            });
 
             // 3. Mobile Action Buttons Event Handling
             // Jump Button
@@ -30386,10 +30549,18 @@ function animateShopParticles() {
             // Pause Button
             const pauseBtn = document.getElementById('mobile-pause-btn');
             if (pauseBtn) {
-                pauseBtn.addEventListener('touchstart', (e) => {
+                const triggerPause = (e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     togglePauseMobile();
-                }, { passive: false });
+                };
+                pauseBtn.addEventListener('touchstart', triggerPause, { passive: false });
+                pauseBtn.addEventListener('mousedown', triggerPause, { passive: false });
+            }
+
+            // Sync Jump button on initialization
+            if (typeof window.updateMobileJumpButtonState === 'function') {
+                window.updateMobileJumpButtonState();
             }
         }
 
@@ -34715,14 +34886,15 @@ function animateShopParticles() {
                 return;
             }
 
-            // Button 9: Start (Pause) 
-            // In browsers, calling exitPointerLock() drops us out of the game and shows the pause menu
+            // Button 9: Start (Pause)
             const startBtnPressed = gp.buttons[9] && gp.buttons[9].pressed;
             if (startBtnPressed && menuGamepadState.cooldown <= 0) {
-                if (document.pointerLockElement === document.body) {
+                if (!state.isMobile && document.pointerLockElement === document.body) {
                     document.exitPointerLock();
-                    menuGamepadState.cooldown = 0.5;
+                } else {
+                    togglePauseMobile();
                 }
+                menuGamepadState.cooldown = 0.5;
             }
 
             // Deadzones
@@ -34967,6 +35139,9 @@ function animateShopParticles() {
                         alertText = "JETPACK ACQUIRED";
                         alertColor = "#ffaa00";
                         queuePickupRespawn(spawnJetPackPickup);
+                        if (typeof window.updateMobileJumpButtonState === 'function') {
+                            window.updateMobileJumpButtonState();
+                        }
                     } else if (type === 'rocket') {
                         state.currentWeapon = 'rocket';
                         state.rocketAmmo = getRocketMaxAmmo();
@@ -35238,37 +35413,79 @@ function animateShopParticles() {
                 }
 
                 // --- DYNAMIC RESOLUTION SCALING (DRS) ---
-                if (state.isPlaying) { // RE-ENABLED: Using immediate large steps instead of smooth steps to minimize stutter events
+                if (state.isPlaying) {
                     _drsFpsFrames++;
-                    if (realTime > _drsLastTime + 2000) { // PERF: Evaluate every 2s instead of 1s to prevent oscillation
+                    if (realTime > _drsLastTime + 2000) { // PERF: Evaluate every 2s
                         const fps = Math.round((_drsFpsFrames * 1000) / (realTime - _drsLastTime));
                         _drsFpsFrames = 0;
                         _drsLastTime = realTime;
-                        const maxRatio = Math.min(window.devicePixelRatio || 1, 1.0); // PERF FIX: Lock max recovery to 1.0. 1.25 on Retina displays tanks FPS.
+                        
+                        const maxRatio = Math.min(window.devicePixelRatio || 1, state.isMobile ? 1.5 : 1.25);
+                        
+                        // Dynamically compute valid steps
+                        const ratios = [0.75];
+                        if (maxRatio > 0.75) {
+                            if (maxRatio > 1.0 && !ratios.includes(1.0)) ratios.push(1.0);
+                            if (maxRatio > 1.25 && !ratios.includes(1.25)) ratios.push(1.25);
+                            if (!ratios.includes(maxRatio)) ratios.push(maxRatio);
+                        }
+                        ratios.sort((a, b) => a - b);
+                        
                         let ratioChanged = false;
+                        let currentIndex = ratios.indexOf(_drsCurrentRatio);
+                        if (currentIndex === -1) {
+                            // Find closest ratio to clamp _drsCurrentRatio safely
+                            let closestIndex = 0;
+                            let minDiff = Math.abs(ratios[0] - _drsCurrentRatio);
+                            for (let i = 1; i < ratios.length; i++) {
+                                const diff = Math.abs(ratios[i] - _drsCurrentRatio);
+                                if (diff < minDiff) {
+                                    minDiff = diff;
+                                    closestIndex = i;
+                                }
+                            }
+                            _drsCurrentRatio = ratios[closestIndex];
+                            currentIndex = closestIndex;
+                            ratioChanged = true;
+                        }
 
-                        if (fps < 24) {
+                        // If FPS is low, we step down
+                        if (fps < 32) {
                             _drsLowFpsCount++;
-                            if (_drsLowFpsCount >= 3) { // 3 consecutive intervals (6s total) of low FPS
-                                if (_drsCurrentRatio > 0.75) {
-                                    _drsCurrentRatio = 0.75; // Jump straight to 0.75 to limit stutters to exactly ONE
+                            if (_drsLowFpsCount >= 2) { // 2 consecutive intervals (4s total) of low FPS
+                                if (currentIndex > 0) {
+                                    const oldRatio = _drsCurrentRatio;
+                                    _drsCurrentRatio = ratios[currentIndex - 1];
                                     ratioChanged = true;
-                                    _drsLastScaleDownTime = realTime; // Track when we last scaled down to prevent oscillation
-                                    console.warn(`[DRS] Performance drop detected (FPS: ${fps}). Entering Performance Rescue Mode (DRS: 0.75, post-processing simplified).`);
+                                    _drsLastScaleDownTime = realTime;
+                                    
+                                    // If we scaled up less than 15 seconds ago and now have to scale down,
+                                    // mark the old ratio as unstable to prevent future scale-ups to it.
+                                    if (realTime - _drsLastScaleUpTime < 15000) {
+                                        _drsMaxStableRatio = _drsCurrentRatio;
+                                        console.warn(`[DRS] Scale-up to ${oldRatio} failed within 15s. Locking max stable ratio to ${_drsMaxStableRatio}.`);
+                                    }
+                                    
+                                    console.warn(`[DRS] Performance drop detected (FPS: ${fps}). Downscaling: ${oldRatio} -> ${_drsCurrentRatio}.`);
                                 }
                                 _drsLowFpsCount = 0;
                             }
-                            // Scale down particles aggressively on lag (< 24 fps)
+                            // Scale down particles aggressively on lag (< 32 fps)
                             MAX_PARTICLES = Math.max(100, Math.floor(MAX_PARTICLES * 0.75));
                         } else if (fps >= 55) {
                             _drsLowFpsCount = 0; // Reset low FPS counter on recovery
-                            // DRS STABILIZER hysteresis: Only scale UP if it's been at least 30s since the last scale down
-                            // to completely eliminate rapid back-and-forth resolution oscillation stutters.
+                            // DRS STABILIZER hysteresis: Only scale UP if:
+                            // 1. It's been at least 30s since the last scale down.
+                            // 2. The next ratio is <= our known max stable ratio.
                             if (realTime > _drsLastScaleDownTime + 30000) {
-                                if (_drsCurrentRatio < maxRatio) {
-                                    _drsCurrentRatio = maxRatio; // Jump straight back to max
-                                    ratioChanged = true;
-                                    console.log(`[DRS] Performance recovered (FPS: ${fps}). Restoring high-quality settings (DRS: ${maxRatio}).`);
+                                if (currentIndex !== -1 && currentIndex < ratios.length - 1) {
+                                    const nextRatio = ratios[currentIndex + 1];
+                                    if (nextRatio <= _drsMaxStableRatio) {
+                                        _drsCurrentRatio = nextRatio;
+                                        ratioChanged = true;
+                                        _drsLastScaleUpTime = realTime;
+                                        console.log(`[DRS] Performance stable (FPS: ${fps}). Upscaling: ${ratios[currentIndex]} -> ${_drsCurrentRatio}.`);
+                                    }
                                 }
                             }
                             // Instantly restore particle limit if running adequately (>= 30 fps)
@@ -35276,14 +35493,14 @@ function animateShopParticles() {
                                 MAX_PARTICLES = 100000;
                             }
                         } else {
-                            _drsLowFpsCount = 0; // Reset low FPS counter since FPS is acceptable (>= 24)
+                            _drsLowFpsCount = 0; // Reset low FPS counter since FPS is acceptable (>= 32)
                             // Instantly restore particle limit if running adequately (>= 30 fps)
                             if (fps >= 30) {
                                 MAX_PARTICLES = 100000;
                             }
                         }
 
-                        // PERF FIX: Apply DRS change once, resize ALL pipeline targets
+                        // Apply DRS change once, resize ALL pipeline targets
                         if (ratioChanged) {
                             renderer.setPixelRatio(_drsCurrentRatio);
                             if (typeof composer !== 'undefined' && composer) {
@@ -36258,6 +36475,9 @@ function animateShopParticles() {
                                 state.jetPackFuel = 0;
                                 state.hasJetPack = false; // Remove ability
                                 state.isJetPacking = false;
+                                if (typeof window.updateMobileJumpButtonState === 'function') {
+                                    window.updateMobileJumpButtonState();
+                                }
                             }
 
                             // Spawn Jetpack Particles: Dual Exhausts
@@ -38806,6 +39026,9 @@ function animateShopParticles() {
             state.hasDoubleJump = false;
             state.hasJetPack = false;
             state.jetPackFuel = getJetPackMaxFuel();
+            if (typeof window.updateMobileJumpButtonState === 'function') {
+                window.updateMobileJumpButtonState();
+            }
             state.jumpCount = 0;
             state.speedBoostActive = false;
             state.speedBoostTimer = 0;
@@ -39291,6 +39514,9 @@ function animateShopParticles() {
                         UI.overlay.style.opacity = '0';
                         UI.overlay.style.pointerEvents = 'none';
                     }
+                    const stageInfo = document.getElementById('stage-info');
+                    if (stageInfo) stageInfo.style.display = 'block';
+
                     if (!state.isMobile) {
                         try {
                             const p = document.body.requestPointerLock();
@@ -39301,8 +39527,7 @@ function animateShopParticles() {
                         if (mobHud) mobHud.style.display = 'block';
                     }
 
-                    state.isPlaying = true;
-                    state.lastTime = performance.now();
+                    resumeGame();
                     return; // EXIT EARLY - DO NOT RESET
                 }
 
@@ -39384,6 +39609,7 @@ function animateShopParticles() {
                     const mobHud = document.getElementById('mobile-hud');
                     if (mobHud) mobHud.style.display = 'block';
                 }
+                state.pauseStartTime = null;
                 state.isPlaying = true;
             });
         }
@@ -39411,7 +39637,7 @@ function animateShopParticles() {
                     return;
                 }
                 // GAME ACTIVE
-                state.isPlaying = true;
+                resumeGame();
                 state.gamepadInputBlockTimer = 0.5; // Short delay blocking gamepad actions (prevents jumping out of menus)
                 if (overlay) {
                     // Prevent pointer lock from immediately hiding overlay if we are fading it out
@@ -39420,10 +39646,9 @@ function animateShopParticles() {
                     }
                 }
                 if (stageInfo) stageInfo.style.display = 'block';
-                state.lastTime = performance.now(); // Reset delta to prevent jumps
             } else {
                 // GAME PAUSED
-                state.isPlaying = false;
+                pauseGame();
                 state.isFiring = false; // Reset firing state
                 state.moveForward = false; // Reset movement states
                 state.moveBackward = false;
@@ -42833,18 +43058,32 @@ function animateShopParticles() {
                             pointer-events: none;
                         `;
 
+                        const isMobileLayout = state.isMobile || window.innerWidth <= 950;
+                        let boxWidth, boxHeight, inactiveBoxWidth, inactiveBoxHeight;
+                        if (isMobileLayout) {
+                            boxWidth = 32;
+                            boxHeight = 32;
+                            inactiveBoxWidth = 24;
+                            inactiveBoxHeight = 24;
+                        } else {
+                            boxWidth = 54;
+                            boxHeight = 54;
+                            inactiveBoxWidth = 44;
+                            inactiveBoxHeight = 44;
+                        }
+
                         if (isActive) {
                             boxStyle += `
-                                width: 54px;
-                                height: 54px;
+                                width: ${boxWidth}px;
+                                height: ${boxHeight}px;
                                 border: 2px solid ${color};
                                 transform: scale(1.12) translateY(-2px);
                                 box-shadow: 0 0 20px ${color};
                             `;
                         } else {
                             boxStyle += `
-                                width: 44px;
-                                height: 44px;
+                                width: ${inactiveBoxWidth}px;
+                                height: ${inactiveBoxHeight}px;
                                 border: 1.5px solid rgba(255, 255, 255, 0.25);
                                 transform: scale(0.9);
                                 opacity: 0.55;
@@ -42852,10 +43091,18 @@ function animateShopParticles() {
                         }
 
                         let innerIcon = iconSvg;
-                        if (!isActive) {
-                            innerIcon = iconSvg.replace('width="24"', 'width="28"').replace('height="24"', 'height="28"');
+                        if (isMobileLayout) {
+                            if (!isActive) {
+                                innerIcon = iconSvg.replace('width="24"', 'width="14"').replace('height="24"', 'height="14"');
+                            } else {
+                                innerIcon = iconSvg.replace('width="24"', 'width="20"').replace('height="24"', 'height="20"');
+                            }
                         } else {
-                            innerIcon = iconSvg.replace('width="24"', 'width="36"').replace('height="24"', 'height="36"');
+                            if (!isActive) {
+                                innerIcon = iconSvg.replace('width="24"', 'width="28"').replace('height="24"', 'height="28"');
+                            } else {
+                                innerIcon = iconSvg.replace('width="24"', 'width="36"').replace('height="24"', 'height="36"');
+                            }
                         }
 
                         html += `<div style="${boxStyle}">${innerIcon}</div>`;
@@ -43294,6 +43541,13 @@ function animateShopParticles() {
             updateOptionButtons();
         }
 
+        function setFisheye(state) {
+            cachedSettings.fisheyeEnabled = state;
+            localStorage.setItem('martins_fisheye_enabled', state);
+            updatePostProcessingStates();
+            updateOptionButtons();
+        }
+
         function applyGroundFogSetting() {
             const enabled = cachedSettings.groundFogEnabled;
             const val = enabled ? 1.0 : 0.0;
@@ -43375,12 +43629,13 @@ function animateShopParticles() {
         }
 
         function updateOptionButtons() {
-            // Music
-            const musicPlaying = musicManager && musicManager.isPlaying;
+            // Music (reflected by setting preference, not active audio state to avoid Autoplay block issues)
+            const savedMusicSetting = localStorage.getItem('martins_music_on');
+            const musicEnabledSetting = savedMusicSetting !== 'false';
             const musicOnBtn = document.getElementById('music-on-btn');
             const musicOffBtn = document.getElementById('music-off-btn');
-            if (musicOnBtn) musicOnBtn.classList.toggle('active', musicPlaying);
-            if (musicOffBtn) musicOffBtn.classList.toggle('active', !musicPlaying);
+            if (musicOnBtn) musicOnBtn.classList.toggle('active', musicEnabledSetting);
+            if (musicOffBtn) musicOffBtn.classList.toggle('active', !musicEnabledSetting);
 
             // Fullscreen
             const isFS = document.fullscreenElement || (document.getElementById('fullscreen-toggle') && document.getElementById('fullscreen-toggle').checked);
@@ -43397,7 +43652,7 @@ function animateShopParticles() {
             if (fpsOffBtn) fpsOffBtn.classList.toggle('active', !fpsEnabled);
 
             // Grass
-            const grassDensity = localStorage.getItem('martins_grass_density') || 'MEDIUM';
+            const grassDensity = localStorage.getItem('martins_grass_density') || 'HIGH';
             const grassHighBtn = document.getElementById('grass-high-btn');
             const grassMedBtn = document.getElementById('grass-med-btn');
             const grassLowBtn = document.getElementById('grass-low-btn');
@@ -43471,6 +43726,13 @@ function animateShopParticles() {
             if (grainOnBtn) grainOnBtn.classList.toggle('active', grainEnabled);
             if (grainOffBtn) grainOffBtn.classList.toggle('active', !grainEnabled);
 
+            // Fisheye Lens
+            const fisheyeEnabled = cachedSettings.fisheyeEnabled;
+            const fisheyeOnBtn = document.getElementById('fisheye-on-btn');
+            const fisheyeOffBtn = document.getElementById('fisheye-off-btn');
+            if (fisheyeOnBtn) fisheyeOnBtn.classList.toggle('active', fisheyeEnabled);
+            if (fisheyeOffBtn) fisheyeOffBtn.classList.toggle('active', !fisheyeEnabled);
+
             // Ground Fog
             const groundFogEnabled = cachedSettings.groundFogEnabled;
             const groundFogOnBtn = document.getElementById('groundfog-on-btn');
@@ -43478,6 +43740,52 @@ function animateShopParticles() {
             if (groundFogOnBtn) groundFogOnBtn.classList.toggle('active', groundFogEnabled);
             if (groundFogOffBtn) groundFogOffBtn.classList.toggle('active', !groundFogEnabled);
 
+            // Compass
+            const compassEnabled = cachedSettings.compassEnabled !== false && cachedSettings.compassEnabled !== 'false';
+            const compassOnBtn = document.getElementById('compass-on-btn');
+            const compassOffBtn = document.getElementById('compass-off-btn');
+            if (compassOnBtn) compassOnBtn.classList.toggle('active', compassEnabled);
+            if (compassOffBtn) compassOffBtn.classList.toggle('active', !compassEnabled);
+
+            // Objectives
+            const objectivesEnabled = cachedSettings.objectivesEnabled !== false && cachedSettings.objectivesEnabled !== 'false';
+            const objectivesOnBtn = document.getElementById('objectives-on-btn');
+            const objectivesOffBtn = document.getElementById('objectives-off-btn');
+            if (objectivesOnBtn) objectivesOnBtn.classList.toggle('active', objectivesEnabled);
+            if (objectivesOffBtn) objectivesOffBtn.classList.toggle('active', !objectivesEnabled);
+
+        }
+
+        function applyCompassSetting() {
+            const enabled = cachedSettings.compassEnabled !== false && cachedSettings.compassEnabled !== 'false';
+            if (enabled) {
+                document.body.classList.remove('hide-compass');
+            } else {
+                document.body.classList.add('hide-compass');
+            }
+        }
+
+        function setCompassEnabled(state) {
+            cachedSettings.compassEnabled = state;
+            localStorage.setItem('martins_compass_enabled', state);
+            applyCompassSetting();
+            updateOptionButtons();
+        }
+
+        function applyObjectivesSetting() {
+            const enabled = cachedSettings.objectivesEnabled !== false && cachedSettings.objectivesEnabled !== 'false';
+            if (enabled) {
+                document.body.classList.remove('hide-stage-info');
+            } else {
+                document.body.classList.add('hide-stage-info');
+            }
+        }
+
+        function setObjectivesEnabled(state) {
+            cachedSettings.objectivesEnabled = state;
+            localStorage.setItem('martins_objectives_enabled', state);
+            applyObjectivesSetting();
+            updateOptionButtons();
         }
 
         // Init UI State & Load Settings
@@ -43500,6 +43808,8 @@ function animateShopParticles() {
 
                 applyLensFlareSetting();
                 applyGodRaysSetting();
+                applyCompassSetting();
+                applyObjectivesSetting();
                 if (typeof windParticles !== 'undefined' && windParticles) {
                     windParticles.visible = isWindOn;
                 }
@@ -43508,6 +43818,27 @@ function animateShopParticles() {
         }
 
         setInterval(updateOptionButtons, 500); // Poll for external changes (like ESC for fullscreen)
+
+        // Start music on first user interaction if enabled but not playing (due to autoplay block)
+        const startMusicOnInteraction = () => {
+            if (typeof musicManager !== 'undefined' && musicManager) {
+                const savedMusicSetting = localStorage.getItem('martins_music_on');
+                const shouldPlay = savedMusicSetting !== 'false';
+                if (shouldPlay && !musicManager.isPlaying) {
+                    if (!musicManager.initialized) {
+                        musicManager.init();
+                    } else {
+                        musicManager.play();
+                    }
+                }
+            }
+            window.removeEventListener('click', startMusicOnInteraction);
+            window.removeEventListener('keydown', startMusicOnInteraction);
+            window.removeEventListener('touchstart', startMusicOnInteraction);
+        };
+        window.addEventListener('click', startMusicOnInteraction);
+        window.addEventListener('keydown', startMusicOnInteraction);
+        window.addEventListener('touchstart', startMusicOnInteraction);
 
         // --- BIND UI SOUNDS ---
         window.addEventListener('DOMContentLoaded', () => {
